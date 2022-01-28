@@ -33,6 +33,36 @@ defmodule Exquisitle.Impl.Game do
   def make_move(game, guess) do
     game
     |> Guess.make_guess(guess)
+    |> update_game(game)
     |> Tally.call()
+  end
+
+  defp update_game({:noop, _guess}, game), do: game
+
+  defp update_game({:bad_guess, _guess}, game), do: %{game | state: :bad_guess}
+
+  defp update_game({:good_guess, guess}, game) do
+    hints = Enum.group_by(guess, fn {_char, hint} -> hint end, fn {char, _hint} -> char end)
+
+    game
+    |> Map.update(:guessed_words, [], fn current -> current ++ [guess] end)
+    |> Map.update(:absent_letters, [], &update_letters(&1, hints[:absent]))
+    |> Map.update(:present_letters, [], &update_letters(&1, hints[:present]))
+    |> Map.update(:correct_letters, [], &update_letters(&1, hints[:correct]))
+    |> maybe_won(guess)
+  end
+
+  defp update_letters(current, nil), do: current
+
+  defp update_letters(current, values) do
+    Enum.reduce(values, current, &MapSet.put(&2, &1))
+  end
+
+  defp maybe_won(game, guess) do
+    if Enum.all?(guess, fn {_ch, hint} -> hint == :correct end) do
+      %{game | state: :won}
+    else
+      %{game | state: :good_guess}
+    end
   end
 end
