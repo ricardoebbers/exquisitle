@@ -1,4 +1,4 @@
-defmodule Exquisitle.MixProject do
+defmodule ExquisitleUmbrella.MixProject do
   use Mix.Project
 
   def project do
