@@ -1,8 +1,4 @@
-defmodule Dictionary.Impl.WordList do
-  @moduledoc """
-  The implementation of the operations on the word list
-  """
-
+defmodule Dictionary.Impl.WordSet do
   @type t :: MapSet.t(String.t())
 
   @words_file "assets/words.txt"
