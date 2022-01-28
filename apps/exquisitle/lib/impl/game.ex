@@ -23,21 +23,21 @@ defmodule Exquisitle.Impl.Game do
 
   @spec new_easy :: t()
   def new_easy do
-    answer = MapSet.new([Dictionary.random_word()])
+    words = Dictionary.common_words()
 
     %__MODULE__{
-      answers: answer,
-      dictionary: Dictionary.word_set()
+      answers: MapSet.new([Enum.random(words)]),
+      dictionary: words
     }
   end
 
   @spec new_hard :: t()
   def new_hard do
-    all_words = Dictionary.word_set()
+    words = Dictionary.common_words()
 
     %__MODULE__{
-      answers: all_words,
-      dictionary: all_words
+      answers: words,
+      dictionary: words
     }
   end
 

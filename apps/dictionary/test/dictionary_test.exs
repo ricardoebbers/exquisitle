@@ -2,16 +2,15 @@ defmodule DictionaryTest do
   use ExUnit.Case, async: true
   doctest Dictionary
 
-  describe "random_word/0" do
-    test "should return a word" do
-      word = Dictionary.random_word()
-      assert is_binary(word)
+  describe "common_wods/0" do
+    test "should return common words" do
+      assert 2_315 == MapSet.size(Dictionary.common_words())
     end
   end
 
-  describe "word_set/0" do
+  describe "all_words/0" do
     test "should return all words" do
-      assert 12_972 == MapSet.size(Dictionary.word_set())
+      assert 12_972 == MapSet.size(Dictionary.all_words())
     end
   end
 end

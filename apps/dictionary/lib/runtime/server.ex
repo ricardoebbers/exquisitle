@@ -12,13 +12,15 @@ defmodule Dictionary.Runtime.Server do
     Agent.start_link(&WordSet.word_set/0, name: @me)
   end
 
-  @spec random_word :: String.t()
-  def random_word do
-    Agent.get(@me, &WordSet.random_word/1)
+  @spec common_words :: WordSet.t()
+  def common_words do
+    {common_words, _all_words} = Agent.get(@me, & &1)
+    common_words
   end
 
-  @spec word_set :: WordSet.t()
-  def word_set do
-    Agent.get(@me, & &1)
+  @spec all_words :: WordSet.t()
+  def all_words do
+    {_common_words, all_words} = Agent.get(@me, & &1)
+    all_words
   end
 end

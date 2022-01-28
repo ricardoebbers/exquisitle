@@ -1,18 +1,18 @@
 defmodule Dictionary.Impl.WordSet do
   @type t :: MapSet.t(String.t())
 
-  @words_file "assets/words.txt"
+  @common_words "assets/common_words.txt"
+  @all_words "assets/all_words.txt"
 
-  @spec word_set() :: t
+  @spec word_set() :: {t, t}
   def word_set do
-    @words_file
+    {file_to_set(@common_words), file_to_set(@all_words)}
+  end
+
+  defp file_to_set(filename) do
+    filename
     |> File.read!()
     |> String.split("\n", trim: true)
     |> MapSet.new()
-  end
-
-  @spec random_word(t) :: String.t()
-  def random_word(word_list) do
-    Enum.random(word_list)
   end
 end

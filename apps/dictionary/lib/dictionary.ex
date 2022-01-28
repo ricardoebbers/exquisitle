@@ -4,9 +4,9 @@ defmodule Dictionary do
   """
   alias Dictionary.Runtime.Server
 
-  @spec random_word :: String.t()
-  defdelegate random_word, to: Server
+  @spec common_words :: MapSet.t(String.t())
+  defdelegate common_words, to: Server
 
-  @spec word_set :: MapSet.t(String.t())
-  defdelegate word_set, to: Server
+  @spec all_words :: MapSet.t(String.t())
+  defdelegate all_words, to: Server
 end

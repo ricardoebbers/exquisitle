@@ -36,7 +36,7 @@ defmodule ExquisitleTest do
 
     test "should return a game with a dictonary of possible guesses" do
       assert %{dictionary: map = %MapSet{}} = Exquisitle.new_easy()
-      assert 12_972 == MapSet.size(map)
+      assert 2_315 == MapSet.size(map)
     end
   end
 
@@ -47,19 +47,19 @@ defmodule ExquisitleTest do
     end
 
     test "should return an updated game", %{game: game} do
-      assert {game = %Game{}, _tally} = Exquisitle.make_move(game, "ports")
+      assert {game = %Game{}, _tally} = Exquisitle.make_move(game, "evade")
 
-      assert [[{"p", :absent}, {"o", :absent}, {"r", :present}, {"t", :absent}, {"s", :absent}]] =
+      assert [[{"e", :present}, {"v", :absent}, {"a", :correct}, {"d", :absent}, {"e", :absent}]] =
                game.guessed_words
     end
 
     test "should return a tally with a feedback message", %{game: game} do
-      assert {_game, %Tally{feedback_message: message}} = Exquisitle.make_move(game, "ports")
+      assert {_game, %Tally{feedback_message: message}} = Exquisitle.make_move(game, "evade")
       assert String.valid?(message)
     end
 
     test "should return :good_guess for a word from the dictionary", %{game: game} do
-      assert {_game, tally} = Exquisitle.make_move(game, "ports")
+      assert {_game, tally} = Exquisitle.make_move(game, "evade")
       assert tally.game_state == :good_guess
     end
 
