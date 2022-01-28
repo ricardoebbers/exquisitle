@@ -1,7 +1,17 @@
 defmodule Exquisitle.Impl.Game do
-  # @states ~w(initialized valid_word invalid_word won lost)a
-
   alias Exquisitle.Impl.Game.{Guess, Tally}
+
+  @type state :: :initialized | :good_guess | :bad_guess | :won | :lost
+
+  @type t :: %__MODULE__{
+          state: state(),
+          guessed_words: list(Guess.t()),
+          absent_letters: MapSet.t(String.t()),
+          present_letters: MapSet.t(String.t()),
+          correct_letters: MapSet.t(String.t()),
+          answer: String.t(),
+          dictionary: MapSet.t(String.t())
+        }
 
   defstruct state: :initialized,
             guessed_words: [],
@@ -11,6 +21,7 @@ defmodule Exquisitle.Impl.Game do
             answer: "",
             dictionary: MapSet.new()
 
+  @spec new :: t()
   def new do
     %__MODULE__{
       answer: Dictionary.random_word(),
@@ -18,6 +29,7 @@ defmodule Exquisitle.Impl.Game do
     }
   end
 
+  @spec make_move(t(), term()) :: {t(), Tally.t()}
   def make_move(game, guess) do
     game
     |> Guess.make_guess(guess)

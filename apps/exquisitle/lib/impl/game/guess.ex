@@ -1,4 +1,10 @@
 defmodule Exquisitle.Impl.Game.Guess do
+  alias Exquisitle.Impl.Game
+
+  @type t :: list({String.t(), hint()})
+  @typep hint :: :absent | :present | :correct
+
+  @spec make_guess(Game.t(), term()) :: Game.t()
   def make_guess(game = %{state: state}, _guess) when state in [:won, :lost] do
     game
   end
@@ -18,6 +24,8 @@ defmodule Exquisitle.Impl.Game.Guess do
         |> update_game(game, status)
     end
   end
+
+  defp sanitize(nil), do: ""
 
   defp sanitize(guess) do
     guess
