@@ -1,5 +1,5 @@
 defmodule DictionaryTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   doctest Dictionary
 
   describe "random_word/0" do
@@ -9,9 +9,9 @@ defmodule DictionaryTest do
     end
   end
 
-  describe "word_list/0" do
-    test "should return words" do
-      assert MapSet.size(Dictionary.word_set()) > 0
+  describe "word_set/0" do
+    test "should return all words" do
+      assert 12972 == MapSet.size(Dictionary.word_set())
     end
   end
 end

@@ -9,7 +9,7 @@ defmodule Dictionary.Runtime.Server do
 
   @spec start_link(any()) :: {:ok, t} | {:error, term()}
   def start_link(_args) do
-    Agent.start_link(&WordList.word_list/0, name: @me)
+    Agent.start_link(&WordList.word_set/0, name: @me)
   end
 
   @spec random_word :: String.t()

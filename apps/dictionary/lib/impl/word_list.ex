@@ -7,8 +7,8 @@ defmodule Dictionary.Impl.WordList do
 
   @words_file "assets/words.txt"
 
-  @spec word_list() :: t
-  def word_list do
+  @spec word_set() :: t
+  def word_set do
     @words_file
     |> File.read!()
     |> String.split("\n", trim: true)
