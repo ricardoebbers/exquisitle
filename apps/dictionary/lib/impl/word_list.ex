@@ -5,12 +5,13 @@ defmodule Dictionary.Impl.WordList do
 
   @type t :: list(String.t())
 
-  @spec word_list() :: t | {:error, atom()}
+  @words_file "assets/words.txt"
+
+  @spec word_list() :: t
   def word_list do
-    case File.read("assets/words.txt") do
-      {:ok, word_list} -> word_list |> String.split("\n", trim: true)
-      error -> error
-    end
+    @words_file
+    |> File.read!()
+    |> String.split("\n", trim: true)
   end
 
   @spec random_word(t) :: String.t()
