@@ -3,6 +3,5 @@ defmodule Exquisitle do
 
   defdelegate new_game, to: Game, as: :new
 
-  def make_guess do
-  end
+  defdelegate make_move(game, guess), to: Game
 end
