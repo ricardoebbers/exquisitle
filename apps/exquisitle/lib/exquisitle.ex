@@ -1,16 +1,16 @@
 defmodule Exquisitle do
-  alias Exquisitle.Impl.Game
+  alias Exquisitle.Runtime.Server
   alias Exquisitle.Impl.Game.Tally
 
-  @opaque t :: Game.t()
+  @opaque t :: pid()
   @type tally :: Tally.t()
 
-  @spec new_easy :: t
-  defdelegate new_easy, to: Game
+  @spec easy_game :: {:ok, t}
+  defdelegate easy_game, to: Server
 
-  @spec new_hard :: t
-  defdelegate new_hard, to: Game
+  @spec hard_game :: {:ok, t}
+  defdelegate hard_game, to: Server
 
   @spec make_move(t, term) :: {t, tally}
-  defdelegate make_move(game, guess), to: Game
+  defdelegate make_move(pid, guess), to: Server
 end
