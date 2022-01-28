@@ -36,6 +36,7 @@ defmodule Exquisitle.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:dictionary, in_umbrella: true},
       {:ex_machina, "~> 2.7.0", only: :test}
     ]
   end
