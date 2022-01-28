@@ -1,19 +1,21 @@
 defmodule Exquisitle.Impl.Game.Guess do
   alias Exquisitle.Impl.Game
 
-  @type t :: list({String.t(), hint()})
+  @type t :: {String.t(), list(hint())}
   @typep hint :: :absent | :correct | :present
 
   # @spec make_guess(Game.t(), term()) :: {:good_guess | :bad_guess | :noop, t}
 
-  @spec make_guess(Game.t(), String.t()) :: {:bad_guess | :noop, String.t()} | {:good_guess, t}
-  def make_guess(%{state: state}, guess) when state in [:won, :lost], do: {:noop, guess}
+  @spec make_guess(Game.t(), String.t()) ::
+          {:bad_guess | :noop, String.t(), MapSet.t()} | {:good_guess, t, MapSet.t()}
+  def make_guess(%{state: state, answers: answers}, guess) when state in [:won, :lost],
+    do: {:noop, guess, answers}
 
-  def make_guess(%{answer: answer, dictionary: dictionary}, guess) do
+  def make_guess(%{answers: answers, dictionary: dictionary}, guess) do
     guess
     |> sanitize()
     |> validate(dictionary)
-    |> evaluate(String.graphemes(answer))
+    |> evaluate(answers)
   end
 
   defp sanitize(nil), do: ""
@@ -34,16 +36,33 @@ defmodule Exquisitle.Impl.Game.Guess do
     end
   end
 
-  defp evaluate({:bad_guess, guess}, _), do: {:bad_guess, guess}
+  defp evaluate({:bad_guess, guess}, answers), do: {:bad_guess, guess, answers}
 
-  defp evaluate({:good_guess, guess}, answer) do
-    guess =
+  defp evaluate({:good_guess, guess}, answers) do
+    {hints, answers} =
+      answers
+      |> Enum.map(&do_evaluate(guess, &1))
+      |> Enum.map(&tokenize/1)
+      |> Enum.group_by(fn {k, _v} -> k end, fn {_k, v} -> v end)
+      |> Enum.max_by(fn {_k, v} -> length(v) end)
+
+    {:good_guess, {guess, hints}, MapSet.new(answers)}
+  end
+
+  defp do_evaluate(guess, answer) do
+    hints =
       guess
       |> String.graphemes()
       |> Enum.with_index()
-      |> hint(answer, [])
+      |> hint(String.graphemes(answer), [])
 
-    {:good_guess, guess}
+    {hints, answer}
+  end
+
+  defp tokenize({hints, answer}) do
+    Enum.reduce(hints, {[], []}, fn {_, hint}, {hints, _values} ->
+      {hints ++ [hint], answer}
+    end)
   end
 
   defp hint(_guess, answer, acc) when length(acc) == length(answer), do: acc

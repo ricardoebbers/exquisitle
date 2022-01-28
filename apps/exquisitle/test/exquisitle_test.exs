@@ -5,45 +5,44 @@ defmodule ExquisitleTest do
   alias Exquisitle.Impl.Game
   alias Exquisitle.Impl.Game.Tally
 
-  describe "new_game/0" do
+  describe "new_easy/0" do
     test "should return a game with a random answer from the dictionary" do
-      assert %{answer: answer, dictionary: dictionary} = Exquisitle.new_game()
-      assert String.valid?(answer)
-      assert MapSet.member?(dictionary, answer)
+      assert %{answers: answers, dictionary: dictionary} = Exquisitle.new_easy()
+      assert MapSet.subset?(answers, dictionary)
     end
 
     test "should return a game with state initialized" do
-      assert %{state: :initialized} = Exquisitle.new_game()
+      assert %{state: :initialized} = Exquisitle.new_easy()
     end
 
     test "should return a game with no guessed words" do
-      assert %{guessed_words: []} = Exquisitle.new_game()
+      assert %{guessed_words: []} = Exquisitle.new_easy()
     end
 
     test "should return a game with a map for absent letters" do
-      assert %{absent_letters: map = %MapSet{}} = Exquisitle.new_game()
+      assert %{absent_letters: map = %MapSet{}} = Exquisitle.new_easy()
       assert 0 == MapSet.size(map)
     end
 
     test "should return a game with a map for present letters" do
-      assert %{present_letters: map = %MapSet{}} = Exquisitle.new_game()
+      assert %{present_letters: map = %MapSet{}} = Exquisitle.new_easy()
       assert 0 == MapSet.size(map)
     end
 
     test "should return a game with a map for correct letters" do
-      assert %{correct_letters: map = %MapSet{}} = Exquisitle.new_game()
+      assert %{correct_letters: map = %MapSet{}} = Exquisitle.new_easy()
       assert 0 == MapSet.size(map)
     end
 
     test "should return a game with a dictonary of possible guesses" do
-      assert %{dictionary: map = %MapSet{}} = Exquisitle.new_game()
+      assert %{dictionary: map = %MapSet{}} = Exquisitle.new_easy()
       assert 12_972 == MapSet.size(map)
     end
   end
 
   describe "make_move/2" do
     setup do
-      game = Exquisitle.new_game() |> Map.put(:answer, "weary")
+      game = Exquisitle.new_easy() |> Map.put(:answers, MapSet.new(["weary"]))
       %{game: game}
     end
 

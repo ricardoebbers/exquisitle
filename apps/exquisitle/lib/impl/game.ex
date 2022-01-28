@@ -9,7 +9,7 @@ defmodule Exquisitle.Impl.Game do
           absent_letters: MapSet.t(String.t()),
           present_letters: MapSet.t(String.t()),
           correct_letters: MapSet.t(String.t()),
-          answer: String.t(),
+          answers: MapSet.t(String.t()),
           dictionary: MapSet.t(String.t())
         }
 
@@ -18,14 +18,26 @@ defmodule Exquisitle.Impl.Game do
             absent_letters: MapSet.new(),
             present_letters: MapSet.new(),
             correct_letters: MapSet.new(),
-            answer: "",
+            answers: MapSet.new(),
             dictionary: MapSet.new()
 
-  @spec new :: t()
-  def new do
+  @spec new_easy :: t()
+  def new_easy do
+    answer = MapSet.new([Dictionary.random_word()])
+
     %__MODULE__{
-      answer: Dictionary.random_word(),
+      answers: answer,
       dictionary: Dictionary.word_set()
+    }
+  end
+
+  @spec new_hard :: t()
+  def new_hard do
+    all_words = Dictionary.word_set()
+
+    %__MODULE__{
+      answers: all_words,
+      dictionary: all_words
     }
   end
 
@@ -37,14 +49,17 @@ defmodule Exquisitle.Impl.Game do
     |> Tally.call()
   end
 
-  defp update_game({:noop, _guess}, game), do: game
+  defp update_game({:noop, _guess, _answers}, game), do: game
 
-  defp update_game({:bad_guess, _guess}, game), do: %{game | state: :bad_guess}
+  defp update_game({:bad_guess, _guess, _answers}, game), do: %{game | state: :bad_guess}
 
-  defp update_game({:good_guess, guess}, game) do
+  defp update_game({:good_guess, {guess, hints}, answers}, game) do
+    guess = String.graphemes(guess) |> Enum.zip(hints)
+
     hints = Enum.group_by(guess, fn {_char, hint} -> hint end, fn {char, _hint} -> char end)
 
     game
+    |> Map.put(:answers, answers)
     |> Map.update(:guessed_words, [], fn current -> current ++ [guess] end)
     |> Map.update(:absent_letters, [], &update_letters(&1, hints[:absent]))
     |> Map.update(:present_letters, [], &update_letters(&1, hints[:present]))
