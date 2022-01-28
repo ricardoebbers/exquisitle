@@ -5,7 +5,7 @@ defmodule Dictionary.Domain.WordList do
 
   @type t :: list(String.t())
 
-  @spec word_list() :: t
+  @spec word_list() :: t | {:error, atom()}
   def word_list do
     case File.read("assets/words.txt") do
       {:ok, word_list} -> word_list |> String.split("\n", trim: true)
