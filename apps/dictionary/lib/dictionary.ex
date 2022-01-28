@@ -1,18 +1,14 @@
 defmodule Dictionary do
   @moduledoc """
-  Documentation for `Dictionary`.
+  The API of the Dictionary
   """
+  alias Dictionary.Runtime.Server
 
-  @doc """
-  Hello world.
+  @opaque t :: Server.t()
 
-  ## Examples
+  @spec start_link() :: {:ok, t}
+  defdelegate start_link, to: Server
 
-      iex> Dictionary.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
+  @spec random_word(t) :: String.t()
+  defdelegate random_word(pid), to: Server
 end
