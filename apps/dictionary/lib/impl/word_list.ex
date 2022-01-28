@@ -3,7 +3,7 @@ defmodule Dictionary.Impl.WordList do
   The implementation of the operations on the word list
   """
 
-  @type t :: list(String.t())
+  @type t :: MapSet.t(String.t())
 
   @words_file "assets/words.txt"
 
@@ -12,6 +12,7 @@ defmodule Dictionary.Impl.WordList do
     @words_file
     |> File.read!()
     |> String.split("\n", trim: true)
+    |> MapSet.new()
   end
 
   @spec random_word(t) :: String.t()

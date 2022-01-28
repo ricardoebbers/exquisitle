@@ -7,6 +7,6 @@ defmodule Dictionary do
   @spec random_word :: String.t()
   defdelegate random_word, to: Server
 
-  @spec word_list :: list(String.t())
-  defdelegate word_list, to: Server
+  @spec word_set :: MapSet.t(String.t())
+  defdelegate word_set, to: Server
 end

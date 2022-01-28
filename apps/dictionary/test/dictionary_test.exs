@@ -10,8 +10,8 @@ defmodule DictionaryTest do
   end
 
   describe "word_list/0" do
-    test "should return all words" do
-      assert length(Dictionary.word_list()) > 0
+    test "should return words" do
+      assert MapSet.size(Dictionary.word_set()) > 0
     end
   end
 end

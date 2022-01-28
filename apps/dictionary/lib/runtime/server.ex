@@ -17,7 +17,7 @@ defmodule Dictionary.Runtime.Server do
     Agent.get(@me, &WordList.random_word/1)
   end
 
-  def word_list do
+  def word_set do
     Agent.get(@me, & &1)
   end
 end
