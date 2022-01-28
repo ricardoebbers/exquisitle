@@ -1,4 +1,4 @@
-defmodule Dictionary.Domain.WordList do
+defmodule Dictionary.Impl.WordList do
   @moduledoc """
   The implementation of the operations on the word list
   """
