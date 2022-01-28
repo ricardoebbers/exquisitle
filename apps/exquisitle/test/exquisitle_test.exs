@@ -2,6 +2,7 @@ defmodule ExquisitleTest do
   use ExUnit.Case, async: true
 
   alias Exquisitle
+  alias Exquisitle.Impl.Game
   alias Exquisitle.Impl.Game.Tally
 
   describe "new_game/0" do
@@ -46,12 +47,19 @@ defmodule ExquisitleTest do
       %{game: game}
     end
 
+    test "should return an updated game", %{game: game} do
+      assert {game = %Game{}, _tally} = Exquisitle.make_move(game, "ports")
+
+      assert [[{"p", :absent}, {"o", :absent}, {"r", :present}, {"t", :absent}, {"s", :absent}]] =
+               game.guessed_words
+    end
+
     test "should return a tally with a feedback message", %{game: game} do
       assert {_game, %Tally{feedback_message: message}} = Exquisitle.make_move(game, "ports")
       assert String.valid?(message)
     end
 
-    test "should accept a guessed word from the dictionary", %{game: game} do
+    test "should return :good_guess for a word from the dictionary", %{game: game} do
       assert {_game, tally} = Exquisitle.make_move(game, "ports")
       assert tally.game_state == :good_guess
     end
@@ -69,6 +77,12 @@ defmodule ExquisitleTest do
     test "should return :bad_guess for nil", %{game: game} do
       assert {_game, tally} = Exquisitle.make_move(game, nil)
       assert tally.game_state == :bad_guess
+    end
+
+    test "should return the same game when it is already won", %{game: game} do
+      assert {game_won = %{state: :won}, _tally} = Exquisitle.make_move(game, "weary")
+      assert {game, _tally} = Exquisitle.make_move(game_won, "foo")
+      assert game_won == game
     end
   end
 end

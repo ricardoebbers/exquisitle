@@ -1,7 +1,7 @@
 defmodule Exquisitle.Impl.Game do
   alias Exquisitle.Impl.Game.{Guess, Tally}
 
-  @type state :: :initialized | :good_guess | :bad_guess | :won | :lost
+  @type state :: :initialized | :good_guess | :bad_guess | :won
 
   @type t :: %__MODULE__{
           state: state(),

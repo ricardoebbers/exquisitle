@@ -32,10 +32,6 @@ defmodule Exquisitle.Impl.Game.Tally do
     {game, tally}
   end
 
-  defp feedback_message(:initialized) do
-    "Welcome to Exquisitle!"
-  end
-
   defp feedback_message(:good_guess) do
     "Nice guess!"
   end
@@ -46,9 +42,5 @@ defmodule Exquisitle.Impl.Game.Tally do
 
   defp feedback_message(:won) do
     "Congratulations! You won!"
-  end
-
-  defp feedback_message(:lost) do
-    "Sorry, you lost :("
   end
 end
