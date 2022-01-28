@@ -11,7 +11,7 @@ defmodule DictionaryTest do
 
   describe "word_set/0" do
     test "should return all words" do
-      assert 12972 == MapSet.size(Dictionary.word_set())
+      assert 12_972 == MapSet.size(Dictionary.word_set())
     end
   end
 end
