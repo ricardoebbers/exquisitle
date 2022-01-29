@@ -1,8 +1,8 @@
 defmodule Dictionary.Impl.WordSet do
   @type t :: MapSet.t(String.t())
 
-  @common_words "assets/common_words.txt"
-  @all_words "assets/all_words.txt"
+  @common_words Path.expand("../../assets/common_words.txt", __DIR__)
+  @all_words Path.expand("../../assets/all_words.txt", __DIR__)
 
   @spec word_set() :: {t, t}
   def word_set do

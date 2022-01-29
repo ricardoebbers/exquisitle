@@ -25,5 +25,7 @@ dictionary-*.tar
 # Temporary files, for example, from tests.
 /tmp/
 
+/assets
+
 /priv/plts/*.plt
 /priv/plts/*.plt.hash
