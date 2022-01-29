@@ -1,6 +1,6 @@
 defmodule Exquisitle do
-  alias Exquisitle.Runtime.Server
   alias Exquisitle.Impl.Game.Tally
+  alias Exquisitle.Runtime.Server
 
   @opaque t :: pid()
   @type tally :: Tally.t()

@@ -23,20 +23,22 @@ defmodule Exquisitle.Impl.Game do
 
   @spec new_easy :: t()
   def new_easy do
-    words = Dictionary.common_words()
+    answer = Enum.random(Dictionary.common_words())
+    words = Dictionary.all_words()
 
     %__MODULE__{
-      answers: MapSet.new([Enum.random(words)]),
+      answers: MapSet.new([answer]),
       dictionary: words
     }
   end
 
   @spec new_hard :: t()
   def new_hard do
-    words = Dictionary.common_words()
+    answers = Dictionary.common_words() |> MapSet.new()
+    words = Dictionary.all_words()
 
     %__MODULE__{
-      answers: words,
+      answers: answers,
       dictionary: words
     }
   end
@@ -49,32 +51,28 @@ defmodule Exquisitle.Impl.Game do
     |> Tally.call()
   end
 
-  defp update_game({:noop, _guess, _answers}, game), do: game
+  defp update_game({:noop, _, _}, game), do: game
 
-  defp update_game({:bad_guess, _guess, _answers}, game), do: %{game | state: :bad_guess}
+  defp update_game({:bad_guess, _, _}, game), do: %{game | state: :bad_guess}
 
-  defp update_game({:good_guess, {guess, hints}, answers}, game) do
-    guess = String.graphemes(guess) |> Enum.zip(hints)
-
-    hints = Enum.group_by(guess, fn {_char, hint} -> hint end, fn {char, _hint} -> char end)
+  defp update_game({:good_guess, guess_with_hints, answers}, game) do
+    hints = Enum.group_by(guess_with_hints, &List.last(&1), &List.first(&1))
 
     game
     |> Map.put(:answers, answers)
-    |> Map.update(:guessed_words, [], fn current -> current ++ [guess] end)
+    |> Map.update(:guessed_words, [], &(&1 ++ [guess_with_hints]))
     |> Map.update(:absent_letters, [], &update_letters(&1, hints[:absent]))
     |> Map.update(:present_letters, [], &update_letters(&1, hints[:present]))
     |> Map.update(:correct_letters, [], &update_letters(&1, hints[:correct]))
-    |> maybe_won(guess)
+    |> maybe_won(guess_with_hints)
   end
 
   defp update_letters(current, nil), do: current
 
-  defp update_letters(current, values) do
-    Enum.reduce(values, current, &MapSet.put(&2, &1))
-  end
+  defp update_letters(current, values), do: MapSet.union(current, MapSet.new(values))
 
-  defp maybe_won(game, guess) do
-    if Enum.all?(guess, fn {_ch, hint} -> hint == :correct end) do
+  defp maybe_won(game, hints) do
+    if Enum.all?(hints, &(List.last(&1) == :correct)) do
       %{game | state: :won}
     else
       %{game | state: :good_guess}
