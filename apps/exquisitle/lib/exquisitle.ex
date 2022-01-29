@@ -9,4 +9,7 @@ defmodule Exquisitle do
 
   @spec make_move(t, String.t()) :: Type.tally()
   defdelegate make_move(pid, guess), to: Server
+
+  @spec tally(t) :: Type.tally()
+  defdelegate tally(pid), to: Server
 end

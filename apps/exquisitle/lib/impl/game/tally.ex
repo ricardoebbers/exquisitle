@@ -22,7 +22,7 @@ defmodule Exquisitle.Impl.Game.Tally do
   @spec call(Type.game()) :: {Type.game(), t()}
   def call(game = %{state: state}) do
     tally = %__MODULE__{
-      guessed_words: game.guessed_words,
+      guessed_words: hints_to_string(game.guessed_words),
       absent_letters: MapSet.to_list(game.absent_letters),
       present_letters: MapSet.to_list(game.present_letters),
       correct_letters: MapSet.to_list(game.correct_letters),
@@ -32,6 +32,15 @@ defmodule Exquisitle.Impl.Game.Tally do
     }
 
     {game, tally}
+  end
+
+  defp hints_to_string(guessed_words) do
+    guessed_words
+    |> Enum.map(&Enum.map(&1, fn [letter, hint] -> [letter, Atom.to_string(hint)] end))
+  end
+
+  defp feedback_message(:initialized) do
+    "Welcome to Exquisitle!"
   end
 
   defp feedback_message(:good_guess) do

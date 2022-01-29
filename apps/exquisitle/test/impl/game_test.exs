@@ -118,11 +118,11 @@ defmodule Exquisitle.Impl.GameTest do
       assert %Tally{
                guessed_words: [
                  [
-                   ["m", :absent],
-                   ["a", :absent],
-                   ["n", :correct],
-                   ["g", :correct],
-                   ["o", :correct]
+                   ["m", "absent"],
+                   ["a", "absent"],
+                   ["n", "correct"],
+                   ["g", "correct"],
+                   ["o", "correct"]
                  ]
                ]
              } = tally
