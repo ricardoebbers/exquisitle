@@ -1,11 +1,10 @@
 defmodule Exquisitle.Impl.Game do
   alias Exquisitle.Impl.Game.{Guess, Tally}
-
-  @type state :: :initialized | :good_guess | :bad_guess | :won
+  alias Exquisitle.Type
 
   @type t :: %__MODULE__{
-          state: state(),
-          guessed_words: list(Guess.t()),
+          state: Type.state(),
+          guessed_words: list(Type.hints()),
           absent_letters: MapSet.t(String.t()),
           present_letters: MapSet.t(String.t()),
           correct_letters: MapSet.t(String.t()),
@@ -43,7 +42,7 @@ defmodule Exquisitle.Impl.Game do
     }
   end
 
-  @spec make_move(t(), term()) :: {t(), Tally.t()}
+  @spec make_move(t(), term()) :: {t(), Type.tally()}
   def make_move(game, guess) do
     game
     |> Guess.make_guess(guess)

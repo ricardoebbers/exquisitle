@@ -1,15 +1,14 @@
 defmodule Exquisitle.Impl.Game.Tally do
-  alias Exquisitle.Impl.Game
-  alias Exquisitle.Impl.Game.Guess
+  alias Exquisitle.Type
 
   @type t :: %__MODULE__{
-          guessed_words: list(Guess.t()),
+          guessed_words: list(Type.hints()),
           answers_size: integer(),
           absent_letters: list(String.t()),
           present_letters: list(String.t()),
           correct_letters: list(String.t()),
           feedback_message: String.t(),
-          game_state: Game.state()
+          game_state: Type.state()
         }
 
   defstruct guessed_words: [],
@@ -20,7 +19,7 @@ defmodule Exquisitle.Impl.Game.Tally do
             feedback_message: "",
             game_state: :initialized
 
-  @spec call(Game.t()) :: {Game.t(), t()}
+  @spec call(Type.game()) :: {Type.game(), t()}
   def call(game = %{state: state}) do
     tally = %__MODULE__{
       guessed_words: game.guessed_words,

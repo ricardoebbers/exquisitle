@@ -1,4 +1,7 @@
 defmodule Exquisitle.Impl.Game.Hints do
+  @type t :: [{String.t(), :absent | :correct | :present}]
+
+  @spec for_guess(String.t(), String.t()) :: [t | String.t()]
   def for_guess(guess, answer) do
     guess_letters = String.graphemes(guess)
     answer_letters = String.graphemes(answer)

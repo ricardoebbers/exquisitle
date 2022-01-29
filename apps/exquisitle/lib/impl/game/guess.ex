@@ -1,12 +1,12 @@
 defmodule Exquisitle.Impl.Game.Guess do
-  alias Exquisitle.Impl.Game
   alias Exquisitle.Impl.Game.Hints
+  alias Exquisitle.Type
 
-  @type t :: list(hint())
-  @typep hint :: {String.t(), :absent | :correct | :present}
+  @type t ::
+          {:bad_guess | :noop, String.t(), MapSet.t(String.t())}
+          | {:good_guess, Type.hints(), MapSet.t(String.t())}
 
-  @spec make_guess(Game.t(), String.t()) ::
-          {:bad_guess | :noop, String.t(), MapSet.t()} | {:good_guess, t, MapSet.t()}
+  @spec make_guess(Type.game(), String.t()) :: t
   def make_guess(%{state: state, answers: answers}, guess) when state in [:won, :lost],
     do: {:noop, guess, answers}
 

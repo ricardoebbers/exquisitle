@@ -1,15 +1,23 @@
 defmodule Exquisitle.Runtime.Server do
   alias Exquisitle.Impl.Game
+  alias Exquisitle.Type
   use GenServer
 
+  @type t :: pid()
+
+  @spec easy_game :: t
   def easy_game do
-    GenServer.start_link(__MODULE__, :easy)
+    {:ok, pid} = GenServer.start_link(__MODULE__, :easy)
+    pid
   end
 
+  @spec hard_game :: t
   def hard_game do
-    GenServer.start_link(__MODULE__, :hard)
+    {:ok, pid} = GenServer.start_link(__MODULE__, :hard)
+    pid
   end
 
+  @spec make_move(pid, String.t()) :: Type.tally()
   def make_move(pid, guess) when is_pid(pid) do
     GenServer.call(pid, {:make_move, guess})
   end
