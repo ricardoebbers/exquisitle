@@ -5,16 +5,13 @@ defmodule Exquisitle.Runtime.Server do
 
   @type t :: pid()
 
-  @spec easy_game :: t
-  def easy_game do
-    {:ok, pid} = GenServer.start_link(__MODULE__, :easy)
-    pid
+  @spec start_link(:easy | :hard) :: {:ok, t}
+  def start_link(:easy) do
+    GenServer.start_link(__MODULE__, :easy)
   end
 
-  @spec hard_game :: t
-  def hard_game do
-    {:ok, pid} = GenServer.start_link(__MODULE__, :hard)
-    pid
+  def start_link(:hard) do
+    GenServer.start_link(__MODULE__, :hard)
   end
 
   @spec make_move(pid, String.t()) :: Type.tally()

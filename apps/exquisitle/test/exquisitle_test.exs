@@ -3,23 +3,23 @@ defmodule ExquisitleTest do
 
   alias Exquisitle.Impl.Game.Tally
 
-  describe "easy_game/0" do
+  describe "start_game/0" do
     test "should return a pid" do
-      {:ok, pid} = Exquisitle.easy_game()
+      pid = Exquisitle.start_game(:easy)
       assert is_pid(pid)
     end
   end
 
   describe "hard_game/0" do
     test "should return a pid" do
-      {:ok, pid} = Exquisitle.hard_game()
+      pid = Exquisitle.start_game(:hard)
       assert is_pid(pid)
     end
   end
 
   describe "make_move/2" do
     setup do
-      {:ok, pid} = Exquisitle.easy_game()
+      pid = Exquisitle.start_game(:easy)
       %{game_pid: pid}
     end
 
