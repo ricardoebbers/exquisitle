@@ -17,7 +17,9 @@ defmodule FrontendWeb.Router do
   scope "/", FrontendWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", ExquisitleController, :index
+    post "/", ExquisitleController, :new
+    put "/", ExquisitleController, :update
   end
 
   # Other scopes may use custom stacks.

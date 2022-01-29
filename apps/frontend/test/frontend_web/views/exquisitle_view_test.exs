@@ -1,3 +1,3 @@
-defmodule FrontendWeb.PageViewTest do
+defmodule FrontendWeb.ExquisitleViewTest do
   use FrontendWeb.ConnCase, async: true
 end

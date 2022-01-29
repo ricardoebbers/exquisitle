@@ -1,0 +1,21 @@
+
+<h1><%= @tally.feedback_message %></h1>
+<p>absent_letters:   <%= @tally.absent_letters %></p>
+<p>present_letters:  <%= @tally.present_letters %></p>
+<p>correct_letters:  <%= @tally.correct_letters %></p>
+
+
+<div class="board">
+    <%= for word <- @tally.guessed_words do %>
+        <div class="word">
+        <%= for [letter, hint] <- word do %>
+            <div class="letter"><%= letter %></div>
+        <% end %>
+        </div>
+    <% end %>
+</div>
+
+<%= form_for(@conn, Routes.exquisitle_path(@conn, :update), [ as: "make_move", method: :put], fn form -> %>
+    <%= text_input(form, :guess) %>
+    <%= submit("Make next guess") %>
+<% end) %>
