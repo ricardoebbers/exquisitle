@@ -40,7 +40,7 @@ defmodule Exquisitle.Impl.Game.Tally do
   end
 
   defp feedback_message(:initialized) do
-    "Welcome to Exquisitle!"
+    "Try guessing a word!"
   end
 
   defp feedback_message(:good_guess) do

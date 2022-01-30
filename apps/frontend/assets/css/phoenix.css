@@ -695,3 +695,17 @@ header nav a {
   vertical-align: middle;
   box-sizing: border-box;
 }
+
+.correct {
+  background-color: #198038;
+  color: #ffffff;
+}
+
+.present {
+  background-color: #f1c21b;
+}
+
+.absent {
+  background-color: #393939;
+  color: #ffffff;
+}

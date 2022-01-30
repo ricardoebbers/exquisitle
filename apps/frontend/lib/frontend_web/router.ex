@@ -18,7 +18,7 @@ defmodule FrontendWeb.Router do
     pipe_through :browser
 
     get "/", ExquisitleController, :index
-    post "/", ExquisitleController, :new
+    get "/current", ExquisitleController, :show
     put "/", ExquisitleController, :update
   end
 
