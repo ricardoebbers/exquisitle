@@ -287,10 +287,12 @@ header img {
 #notify {
   align-items: center;
   display: flex;
+  gap: var(--letter-gap) 0;
+  flex-direction: column;
   justify-content: center;
 }
 
-#msg {
+.msg {
   background-color: #009afe;
   border-radius: 1vh;
   box-sizing: border-box;

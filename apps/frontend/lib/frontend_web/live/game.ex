@@ -1,12 +1,15 @@
 defmodule FrontendWeb.Live.Game do
   use FrontendWeb, :live_view
 
+  require Logger
   @alphabet "abcdefghijklmnopqrstuvwxyz"
 
   @impl true
   def mount(_params, _session, socket) do
-    game = Exquisitle.start_game(:easy)
+    game = Exquisitle.start_game(:hard)
     tally = Exquisitle.tally(game)
+
+    Logger.debug("Game pid is #{inspect(game)}")
 
     {:ok, assign(socket, %{game: game, tally: tally, guess: []})}
   end

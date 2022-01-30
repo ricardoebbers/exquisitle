@@ -1,6 +1,7 @@
 <div id="game" phx-window-keydown="type">
     <div id="notify">
-        <div id="msg" open="true" style="animation: 0.25s linear 0s 1 normal forwards running popup;"><%= @tally.feedback_message%></div>
+        <div class="msg" open="true" style="animation: 0.25s linear 0s 1 normal forwards running popup;">Possible answers: <%= @tally.answers_size%></div>
+        <div class="msg" open="true" style="animation: 0.25s linear 0s 1 normal forwards running popup;"><%= @tally.feedback_message%></div>
     </div>
     <main>
         <%= live_component(__MODULE__.Board, tally: @tally,  guess: @guess, id: 1) %>
