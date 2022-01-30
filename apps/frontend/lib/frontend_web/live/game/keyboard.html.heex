@@ -1,0 +1,11 @@
+<div id="kbd">
+    <%= for row <- ["qwertyuiop", "asdfghjkl⌫", "ZXCVBNM"] do %>
+        <%= for letter <- String.graphemes(row) do %>
+            <button
+            id={"kbd_#{String.downcase(letter)}"}
+            class={color_letters(@tally, letter)}
+            phx-click="type" phx-value-key={letter}><%= String.upcase(letter) %></button>
+        <% end %>
+    <% end %>
+    <button id="kbd_enter" phx-click="type" phx-value-key="Enter">ENTER</button>
+</div>

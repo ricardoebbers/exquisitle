@@ -1,0 +1,16 @@
+<div id="board">
+    <%= for row <- @tally.guessed_words do %>
+        <div class="row">
+            <%= for [letter, hint] <- row do %>
+                <div class={"letter #{hint}"}><%= letter %></div>
+            <% end %>
+        </div>
+    <% end %>
+    <div class="row" style={animate_bad_guess(@tally)}>
+        <div class={"letter empty #{if length(@guess) == 0, do: "edit"}"} style={animate_input(@guess, 0)}><%= Enum.at(@guess, 0) %></div>
+        <div class={"letter empty #{if length(@guess) == 1, do: "edit"}"} style={animate_input(@guess, 1)}><%= Enum.at(@guess, 1) %></div>
+        <div class={"letter empty #{if length(@guess) == 2, do: "edit"}"} style={animate_input(@guess, 2)}><%= Enum.at(@guess, 2) %></div>
+        <div class={"letter empty #{if length(@guess) == 3, do: "edit"}"} style={animate_input(@guess, 3)}><%= Enum.at(@guess, 3) %></div>
+        <div class={"letter empty #{if length(@guess) == 4, do: "edit"}"} style={animate_input(@guess, 4)}><%= Enum.at(@guess, 4) %></div>
+    </div>
+</div>
