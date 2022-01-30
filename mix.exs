@@ -5,6 +5,7 @@ defmodule ExquisitleUmbrella.MixProject do
     [
       apps_path: "apps",
       version: "0.1.0",
+      build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       aliases: aliases(),
@@ -41,7 +42,8 @@ defmodule ExquisitleUmbrella.MixProject do
         "dialyzer",
         "test.watch"
       ],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["esbuild default --minify", "phx.digest"],
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run apps/dictionary/priv/repo/seeds.exs"]
     ]
   end
 end

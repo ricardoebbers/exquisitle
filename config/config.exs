@@ -7,6 +7,8 @@
 # General application configuration
 import Config
 
+config :dictionary, ecto_repos: [Dictionary.Repo]
+
 # Configures the endpoint
 config :frontend, FrontendWeb.Endpoint,
   url: [host: "localhost"],

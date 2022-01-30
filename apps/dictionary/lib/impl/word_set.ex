@@ -1,23 +1,27 @@
 defmodule Dictionary.Impl.WordSet do
+  alias Dictionary.Repo
+
+  import Ecto.Query, only: [from: 2]
+
   @type t :: MapSet.t(String.t())
 
   @spec word_set() :: {t, t}
   def word_set do
-    {file_to_set(common_words()), file_to_set(all_words())}
+    {common_words(), all_words()}
   end
 
-  defp file_to_set(filename) do
-    filename
-    |> File.read!()
-    |> String.split("\n", trim: true)
+  defp common_words() do
+    from(w in "words",
+      where: w.type == "common",
+      select: w.word
+    )
+    |> Repo.all()
     |> MapSet.new()
   end
 
-  defp common_words do
-    Path.expand("../../assets/common_words.txt", __DIR__)
-  end
-
-  defp all_words do
-    Path.expand("../../assets/all_words.txt", __DIR__)
+  defp all_words() do
+    from(w in "words", select: w.word)
+    |> Repo.all()
+    |> MapSet.new()
   end
 end
