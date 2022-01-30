@@ -7,10 +7,6 @@ body {
   margin: 0;
 }
 
-main {
-  display: block;
-}
-
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
@@ -474,7 +470,6 @@ main .letter {
   border-radius: 10%;
   box-sizing: border-box;
   cursor: pointer;
-  display: inline-block;
   display: flex;
   font-size: var(--letter-font);
   justify-content: center;
@@ -1105,5 +1100,4 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 1em;
-  min-height: 900px;
 }
