@@ -40,7 +40,8 @@ defmodule ExquisitleUmbrella.MixProject do
         "credo --strict",
         "dialyzer",
         "test.watch"
-      ]
+      ],
+      "assets.deploy": ["esbuild default --minify", "phx.digest"]
     ]
   end
 end
