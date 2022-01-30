@@ -1,5 +1,5 @@
 <div id="kbd">
-    <%= for row <- ["qwertyuiop", "asdfghjkl⌫", "ZXCVBNM"] do %>
+    <%= for row <- ["qwertyuiop", "asdfghjkl⌫", "zxcvbnm"] do %>
         <%= for letter <- String.graphemes(row) do %>
             <button
             id={"kbd_#{String.downcase(letter)}"}
