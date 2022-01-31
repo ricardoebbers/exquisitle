@@ -1,11 +1,11 @@
-<div id="game" phx-window-keydown="type">
 <header>
     <h1>exquisitle</h1>
 </header>
-
-<main>
-    <%= live_component(__MODULE__.Board, tally: @tally,  guess: @guess, id: 1) %>
-</main>
+<div id="game" phx-window-keydown="type">
+    <main>
+        <%= live_component(__MODULE__.Board, tally: @tally,  guess: @guess, id: 1) %>
+    </main>
+</div>
 <footer>
     <div id="notify">
         <div class="msg" open="true" style="animation: 0.25s linear 0s 1 normal forwards running popup;">Possible answers: <%= @tally.answers_size%></div>
@@ -13,4 +13,3 @@
     </div>
     <%= live_component(__MODULE__.Keyboard, tally: @tally, guess: @guess, id: 2) %>
 </footer>
-</div>

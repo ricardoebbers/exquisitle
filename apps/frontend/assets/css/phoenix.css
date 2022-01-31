@@ -180,15 +180,14 @@ main {
   width: 100%;
   padding: 1.5vh 0vh;
   overflow: auto;
-  max-height: 40vh;
 }
 
-main::-webkit-scrollbar {
+#game::-webkit-scrollbar {
   background-color: transparent;
   width: 12px;
 }
 
-main::-webkit-scrollbar-thumb {
+#game::-webkit-scrollbar-thumb {
   background: #625256;
   border-radius: 6px;
 }
@@ -601,4 +600,9 @@ footer {
 .phx-connected {
   height: 100%;
   overflow: hidden;
+}
+
+#game {
+  max-height: 40vh;
+  overflow: auto;
 }
